@@ -1,7 +1,10 @@
 package project.murmuration.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -24,10 +27,14 @@ public class User {
     private String email;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(nullable = false, length = 50)
     private String location;
 
     private int balance;
+
+    @OneToMany(mappedBy = "offer")
+    private List<Offer> offers = new ArrayList<>();
 }
