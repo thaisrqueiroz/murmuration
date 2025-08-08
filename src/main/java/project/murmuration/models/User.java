@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -37,4 +38,11 @@ public class User {
 
     @OneToMany(mappedBy = "offer")
     private List<Offer> offers = new ArrayList<>();
+
+    public User(String username, String name, String password, String location) {
+        this.username = username;
+        this.name = name;
+        this.password = password;
+        this.location = location;
+    }
 }
