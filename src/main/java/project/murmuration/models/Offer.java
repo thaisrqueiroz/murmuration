@@ -31,4 +31,12 @@ public class Offer {
 
     @Column(length = 50)
     private String location;
+
+    public Offer(String title, String description, Category category, int price, String location) {
+        this.title = title;
+        this.description = description;
+        this.category = category;
+        this.price = price;
+        this.location = location;
+    }
 }
