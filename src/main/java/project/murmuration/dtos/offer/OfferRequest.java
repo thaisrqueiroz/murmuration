@@ -11,8 +11,8 @@ public record OfferRequest (
 
         String description,
 
-        @NotBlank(message = "Category is required")
-        Category categoryName,
+        @NotBlank(message = "Category id is required")
+        Long categoryId,
 
         @NotNull(message = "Price is required")
         int price,
