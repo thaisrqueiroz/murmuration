@@ -1,9 +1,12 @@
 package project.murmuration.user.dto;
 
+import project.murmuration.security.Role;
+
 public record UserResponse(
         Long id,
         String username,
         String name,
-        String email
+        String email,
+        Role role
 ) {
 }
