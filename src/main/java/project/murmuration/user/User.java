@@ -1,9 +1,11 @@
 package project.murmuration.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Resource;
 import jakarta.persistence.*;
 import lombok.*;
 import project.murmuration.offer.Offer;
+import project.murmuration.security.Role;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,10 @@ public class User {
     @JsonIgnore
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
     @Column(nullable = false, length = 50)
     private String location;
 
@@ -41,10 +47,11 @@ public class User {
     @OneToMany(mappedBy = "offer")
     private List<Offer> offers = new ArrayList<>();
 
-    public User(String username, String name, String password, String location) {
+    public User(String username, String name, String password, Role role, String location) {
         this.username = username;
         this.name = name;
         this.password = password;
+        this.role = role;
         this.location = location;
     }
 }
