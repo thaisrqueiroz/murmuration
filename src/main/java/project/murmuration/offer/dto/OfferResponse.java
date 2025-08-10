@@ -1,8 +1,7 @@
-package project.murmuration.dtos.offer;
+package project.murmuration.offer.dto;
 
-import project.murmuration.dtos.user.UserResponse;
-import project.murmuration.models.Category;
-import project.murmuration.models.User;
+import project.murmuration.user.dto.UserResponse;
+import project.murmuration.category.Category;
 
 public record OfferResponse (
         Long id,

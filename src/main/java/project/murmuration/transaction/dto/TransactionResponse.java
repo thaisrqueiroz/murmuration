@@ -1,6 +1,6 @@
-package project.murmuration.dtos.transaction;
+package project.murmuration.transaction.dto;
 
-import project.murmuration.dtos.user.UserResponse;
+import project.murmuration.user.dto.UserResponse;
 
 import java.time.LocalDateTime;
 

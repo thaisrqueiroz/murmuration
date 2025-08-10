@@ -1,13 +1,14 @@
-package project.murmuration.models;
+package project.murmuration.transaction;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import project.murmuration.offer.Offer;
+import project.murmuration.user.User;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @NoArgsConstructor

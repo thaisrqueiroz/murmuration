@@ -1,10 +1,10 @@
-package project.murmuration.dtos.offer;
+package project.murmuration.offer.dto;
 
-import project.murmuration.dtos.user.UserResponse;
-import project.murmuration.dtos.user.UserMapper;
-import project.murmuration.models.Category;
-import project.murmuration.models.Offer;
-import project.murmuration.models.User;
+import project.murmuration.user.dto.UserResponse;
+import project.murmuration.user.dto.UserMapper;
+import project.murmuration.category.Category;
+import project.murmuration.offer.Offer;
+import project.murmuration.user.User;
 
 public class OfferMapper {
     static Offer dtoToEntity(OfferRequest dto, Category category, User user){

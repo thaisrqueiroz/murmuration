@@ -1,4 +1,4 @@
-package project.murmuration.dtos.transaction;
+package project.murmuration.transaction.dto;
 
 import jakarta.validation.constraints.NotNull;
 

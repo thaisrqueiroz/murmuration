@@ -1,4 +1,4 @@
-package project.murmuration.dtos.category;
+package project.murmuration.category.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

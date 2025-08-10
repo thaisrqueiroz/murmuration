@@ -1,7 +1,7 @@
-package project.murmuration.dtos.transaction;
+package project.murmuration.transaction.dto;
 
-import project.murmuration.dtos.user.UserMapper;
-import project.murmuration.models.Transaction;
+import project.murmuration.user.dto.UserMapper;
+import project.murmuration.transaction.Transaction;
 
 import java.util.List;
 

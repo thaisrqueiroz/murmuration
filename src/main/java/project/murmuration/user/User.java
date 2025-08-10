@@ -1,8 +1,10 @@
-package project.murmuration.models;
+package project.murmuration.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import project.murmuration.offer.Offer;
+
 import java.util.ArrayList;
 import java.util.List;
 

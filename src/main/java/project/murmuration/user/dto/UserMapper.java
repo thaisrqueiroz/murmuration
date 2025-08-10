@@ -1,6 +1,6 @@
-package project.murmuration.dtos.user;
+package project.murmuration.user.dto;
 
-import project.murmuration.models.User;
+import project.murmuration.user.User;
 
 public class UserMapper {
     public static User dtoToEntity(UserRequest dto){

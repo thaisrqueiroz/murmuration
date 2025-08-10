@@ -1,6 +1,6 @@
-package project.murmuration.dtos.category;
+package project.murmuration.category.dto;
 
-import project.murmuration.models.Category;
+import project.murmuration.category.Category;
 import java.util.List;
 
 public class CategoryMapper {

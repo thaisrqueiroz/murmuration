@@ -1,9 +1,8 @@
-package project.murmuration.dtos.offer;
+package project.murmuration.offer.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import project.murmuration.models.Category;
 
 public record OfferRequest (
         @Size(min = 2, max = 100, message = "Title must be between 2 and 100 characters")

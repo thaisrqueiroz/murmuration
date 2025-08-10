@@ -1,7 +1,9 @@
-package project.murmuration.models;
+package project.murmuration.offer;
 
 import jakarta.persistence.*;
 import lombok.*;
+import project.murmuration.category.Category;
+import project.murmuration.user.User;
 
 @Entity
 @NoArgsConstructor

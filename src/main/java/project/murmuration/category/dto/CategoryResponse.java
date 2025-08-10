@@ -1,4 +1,4 @@
-package project.murmuration.dtos.category;
+package project.murmuration.category.dto;
 
 public record CategoryResponse(
         Long id,
