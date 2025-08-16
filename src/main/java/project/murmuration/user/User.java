@@ -44,7 +44,7 @@ public class User {
 
     private int balance;
 
-    @OneToMany(mappedBy = "offer")
+    @OneToMany(mappedBy = "user")
     private List<Offer> offers = new ArrayList<>();
 
     public User(String username, String name, String password, Role role, String location) {
