@@ -24,6 +24,8 @@ public record UserRequest(
 
         @NotBlank(message = "Location is required")
         @Size(min = 3, max = 50, message = "Location must be between 3 and 50 characters")
-        String location
+        String location,
+
+        String role
 ) {
 }
