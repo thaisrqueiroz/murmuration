@@ -47,9 +47,10 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Offer> offers = new ArrayList<>();
 
-    public User(String username, String name, String password, Role role, String location) {
+    public User(String username, String name, String email, String password, Role role, String location) {
         this.username = username;
         this.name = name;
+        this.email = email;
         this.password = password;
         this.role = role;
         this.location = location;
