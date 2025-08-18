@@ -40,4 +40,13 @@ public class Transaction {
     @OneToOne
     @JoinColumn (name = "receiver_user_id", nullable = false)
     private User receiver;
+
+    public Transaction(String transactionTitle, Offer offer, int amount, LocalDateTime transactionDate, User sender, User receiver) {
+        this.transactionTitle = transactionTitle;
+        this.offer = offer;
+        this.amount = amount;
+        this.transactionDate = transactionDate;
+        this.sender = sender;
+        this.receiver = receiver;
+    }
 }
