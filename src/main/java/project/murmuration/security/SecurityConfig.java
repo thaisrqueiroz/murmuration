@@ -29,7 +29,7 @@ public class SecurityConfig {
             .and()
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.GET, "/api/users/{id}").hasRole("USER")
+                .requestMatchers(HttpMethod.GET, "/api/users/{id}").hasAnyRole("USER", "ADMIN")
                 .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/api/users/{id}").hasRole("USER")
                 .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasRole("ADMIN")
