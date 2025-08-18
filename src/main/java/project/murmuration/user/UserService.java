@@ -32,6 +32,15 @@ public class UserService implements UserDetailsService {
         return users.stream().map(UserMapper::entityToDto).toList();
     }
 
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(User.class.getSimpleName(), "Id", id.toString()));
+    }
+
+    public UserResponse getUserResponseById(Long id) {
+        User user = getUserById(id);
+        return UserMapper.entityToDto(user);
+    }
+
     public UserResponse addUser(UserRequest userRequest) {
         if (userRepository.existsByUsername(userRequest.username())) {
             throw new EntityAlreadyExistsException(User.class.getSimpleName());
@@ -40,5 +49,25 @@ public class UserService implements UserDetailsService {
         newUser.setPassword(passwordEncoder.encode(userRequest.password()));
         User savedUser = userRepository.save(newUser);
         return UserMapper.entityToDto(savedUser);
+    }
+
+    public UserResponse updateUser(Long id, UserRequest userRequest) {
+        User updateUser = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(User.class.getSimpleName(), "id", id.toString()));
+        updateUser.setUsername(userRequest.username());
+        updateUser.setName(userRequest.name());
+        updateUser.setEmail(userRequest.email());
+        updateUser.setPassword(passwordEncoder.encode(userRequest.password()));
+        updateUser.setLocation(userRequest.location());
+        User newUser = userRepository.save(updateUser);
+        return UserMapper.entityToDto(newUser);
+    }
+
+    public void deleteUser(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new EntityNotFoundException(User.class.getSimpleName(), "id", id.toString());
+        }
+        getUserById(id);
+        userRepository.deleteById(id);
     }
 }
