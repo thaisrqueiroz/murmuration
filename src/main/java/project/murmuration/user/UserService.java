@@ -43,7 +43,7 @@ public class UserService implements UserDetailsService {
 
     public UserResponse addUser(UserRequest userRequest) {
         if (userRepository.existsByUsername(userRequest.username())) {
-            throw new EntityAlreadyExistsException(User.class.getSimpleName());
+            throw new EntityAlreadyExistsException(User.class.getSimpleName(), "username", userRequest.username());
         }
         User newUser = UserMapper.dtoToEntity(userRequest);
         newUser.setPassword(passwordEncoder.encode(userRequest.password()));
