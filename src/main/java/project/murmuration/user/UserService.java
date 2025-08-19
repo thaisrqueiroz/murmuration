@@ -54,7 +54,12 @@ public class UserService implements UserDetailsService {
     public UserResponse updateUser(Long id, UserRequest userRequest) {
         User updateUser = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(User.class.getSimpleName(), "id", id.toString()));
-        updateUser.setUsername(userRequest.username());
+        if(!updateUser.getUsername().equals(userRequest.username())) {
+            if (userRepository.existsByUsername(userRequest.username())) {
+                throw new EntityAlreadyExistsException(User.class.getSimpleName(), "username", userRequest.username());
+            }
+            updateUser.setUsername(userRequest.username());
+        }
         updateUser.setName(userRequest.name());
         updateUser.setEmail(userRequest.email());
         updateUser.setPassword(passwordEncoder.encode(userRequest.password()));
