@@ -38,6 +38,11 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
 
                 .requestMatchers(HttpMethod.GET, "/api/offers").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/offers/{id}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/offers/user/{userId}").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/offers").hasRole("USER")
+                .requestMatchers(HttpMethod.PUT, "/api/offers/{id}").hasRole("USER")
+                .requestMatchers(HttpMethod.DELETE, "/api/offers/{id}").hasRole("USER")
 
                 .anyRequest().authenticated()
             )
