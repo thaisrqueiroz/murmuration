@@ -7,6 +7,7 @@ import project.murmuration.exceptions.EntityNotFoundException;
 import project.murmuration.offer.dto.OfferMapper;
 import project.murmuration.offer.dto.OfferRequest;
 import project.murmuration.offer.dto.OfferResponse;
+import project.murmuration.user.User;
 
 import java.util.List;
 
@@ -29,14 +30,18 @@ public class OfferService {
         return OfferMapper.entityToDto(offer);
     }
 
-    public OfferResponse addOffer(Offer offer) {
-        Offer savedOffer = offerRepository.save(offer);
+    public OfferResponse addOffer(OfferRequest offerRequest, Category category, User user) {
+        Offer newOffer = OfferMapper.dtoToEntity(offerRequest, category, user);
+        Offer savedOffer = offerRepository.save(newOffer);
         return OfferMapper.entityToDto(savedOffer);
     }
 
-    public OfferResponse updateOffer(Long id, OfferRequest offerRequest, Category category) {
+    public OfferResponse updateOffer(Long id, OfferRequest offerRequest, Category category, User user) {
         Offer updatedOffer = offerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Offer.class.getSimpleName(), "id", id.toString()));
+        if (!updatedOffer.getUser().getId().equals(user.getId())) {
+            throw new SecurityException("You don't have permission to update this offer");
+        }
         updatedOffer.setTitle(offerRequest.title());
         updatedOffer.setDescription(offerRequest.description());
         updatedOffer.setPrice(offerRequest.price());
@@ -45,11 +50,20 @@ public class OfferService {
         return OfferMapper.entityToDto(savedOffer);
     }
 
-    public void deleteOffer(Long id) {
-        if (!offerRepository.existsById(id)) {
-            throw new EntityNotFoundException(Offer.class.getSimpleName(), "id", id.toString());
+    public void deleteOffer(Long id, User user) {
+        Offer offer = offerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(Offer.class.getSimpleName(), "id", id.toString()));
+        if (!offer.getUser().getId().equals(user.getId())) {
+            throw new SecurityException("You don't have permission to delete this offer");
         }
-        getOfferById(id);
         offerRepository.deleteById(id);
+    }
+
+    public List<OfferResponse> getOffersByUserId(Long userId) {
+        List<Offer> offers = offerRepository.findByUserId(userId);
+        if (offers.isEmpty()) {
+            throw new EntityNotFoundException(Offer.class.getSimpleName(), "userId", userId.toString());
+        }
+        return offers.stream().map(OfferMapper::entityToDto).toList();
     }
 }
