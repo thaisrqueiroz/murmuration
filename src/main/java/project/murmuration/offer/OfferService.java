@@ -46,6 +46,7 @@ public class OfferService {
         updatedOffer.setDescription(offerRequest.description());
         updatedOffer.setPrice(offerRequest.price());
         updatedOffer.setCategory(category);
+        updatedOffer.setLocation(offerRequest.location());
         Offer savedOffer = offerRepository.save(updatedOffer);
         return OfferMapper.entityToDto(savedOffer);
     }
