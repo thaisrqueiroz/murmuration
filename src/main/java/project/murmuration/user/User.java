@@ -45,6 +45,7 @@ public class User {
     private int balance;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Offer> offers = new ArrayList<>();
 
     public User(String username, String name, String email, String password, Role role, String location) {
