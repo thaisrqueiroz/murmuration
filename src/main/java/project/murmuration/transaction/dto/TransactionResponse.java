@@ -6,12 +6,10 @@ import java.time.LocalDateTime;
 
 public record TransactionResponse(
         Long id,
-        String transactionTitle,
         Long offerId,
         String offerTitle,
-        int amount,
-        UserResponse sender,
-        UserResponse receiver,
+        UserResponse userCustomer,
+        UserResponse userReceiver,
         LocalDateTime transactionDate
 ) {
 }

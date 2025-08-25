@@ -41,4 +41,22 @@ public class GlobalExceptionHandler {
         });
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(InsufficientBalanceException.class)
+    public ResponseEntity<ErrorResponse> handleInsufficientBalanceException(InsufficientBalanceException exception, HttpServletRequest req) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        String controllerPath = String.valueOf(req.getRequestURL());
+        ErrorResponse errorResponse = new ErrorResponse(status, exception.getMessage(), controllerPath);
+
+        return new ResponseEntity<>(errorResponse, status);
+    }
+
+    @ExceptionHandler(SecurityException.class)
+    public ResponseEntity<ErrorResponse> handleSecurityException(SecurityException exception, HttpServletRequest req) {
+        HttpStatus status = HttpStatus.FORBIDDEN;
+        String controllerPath = String.valueOf(req.getRequestURL());
+        ErrorResponse errorResponse = new ErrorResponse(status, exception.getMessage(), controllerPath);
+
+        return new ResponseEntity<>(errorResponse, status);
+    }
 }

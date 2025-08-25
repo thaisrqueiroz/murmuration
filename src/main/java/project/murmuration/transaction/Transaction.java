@@ -21,32 +21,25 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "transaction_title")
-    private String transactionTitle;
-
     @ManyToOne
     @JoinColumn(name = "offer_id", nullable = false)
     private Offer offer;
-
-    private int amount;
 
     @Column(name = "transaction_date", nullable = false)
     private LocalDateTime transactionDate;
 
     @OneToOne
-    @JoinColumn (name = "sender_user_id", nullable = false)
-    private User sender;
+    @JoinColumn (name = "customer_user_id", nullable = false)
+    private User userCustomer;
 
     @OneToOne
     @JoinColumn (name = "receiver_user_id", nullable = false)
-    private User receiver;
+    private User userReceiver;
 
-    public Transaction(String transactionTitle, Offer offer, int amount, LocalDateTime transactionDate, User sender, User receiver) {
-        this.transactionTitle = transactionTitle;
+    public Transaction(Offer offer, LocalDateTime transactionDate, User userCustomer, User userReceiver) {
         this.offer = offer;
-        this.amount = amount;
         this.transactionDate = transactionDate;
-        this.sender = sender;
-        this.receiver = receiver;
+        this.userCustomer = userCustomer;
+        this.userReceiver = userReceiver;
     }
 }
