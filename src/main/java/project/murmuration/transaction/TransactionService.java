@@ -25,16 +25,20 @@ public class TransactionService {
 
     public List<TransactionResponse> getAllTransactions() {
         List<Transaction> transactions = transactionRepository.findAll();
-        return transactions.stream().map(TransactionMapper::entityToDto).toList();
+        return TransactionMapper.entityToDto(transactions);
     }
 
-    public Transaction getTransactionById(Long id) {
-        return transactionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Transaction.class.getSimpleName(), "id", id.toString()));
+    public List<TransactionResponse> getTransactionsByUserId(Long userId) {
+        List<Transaction> transactions = transactionRepository.findByUserCustomerIdOrUserReceiverId(userId, userId);
+        if (transactions.isEmpty()){
+            throw new EntityNotFoundException(Transaction.class.getSimpleName(), "userId", userId.toString());
+        }
+        return TransactionMapper.entityToDto(transactions);
     }
 
     public TransactionResponse processTransaction(TransactionRequest request, CustomUserDetail customUserDetail) {
         Offer offer = offerRepository.findById(request.offerId()).orElseThrow(() -> new EntityNotFoundException(Offer.class.getSimpleName(), "id", request.offerId().toString()));
-        User userCustomer = userRepository.findById(request.userCustomer()).orElseThrow(() -> new EntityNotFoundException(User.class.getSimpleName(), "id", request.userCustomer().toString()));
+        User userCustomer = userRepository.findById(customUserDetail.getUser().getId()).orElseThrow(() -> new EntityNotFoundException(User.class.getSimpleName(), "id", customUserDetail.getUser().getId().toString()));
         User userReceiver = offer.getUser();
 
         if(!customUserDetail.getUser().getId().equals(userCustomer.getId())) {
