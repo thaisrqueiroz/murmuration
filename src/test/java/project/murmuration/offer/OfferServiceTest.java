@@ -57,9 +57,9 @@ public class OfferServiceTest {
         CategoryResponse categoryResponse = new CategoryResponse(1L, "Food");
         UserResponse userResponse = new UserResponse(1L, "thais", "Thais", "thais@email.com", USER);
 
-        offerRequest = new OfferRequest("Pao de queijo", "Delicious Brazilian cheese bread, twelve units", 1L, 5, "Valencia");
+        offerRequest = new OfferRequest("Pao de queijo", "Delicious Brazilian cheese bread, twelve units", 1L, 5, "Valencia", false);
 
-        offerResponse = new OfferResponse(1L, "Pao de queijo", "Delicious Brazilian cheese bread, twelve units", categoryResponse, 5, userResponse, "Valencia");
+        offerResponse = new OfferResponse(1L, "Pao de queijo", "Delicious Brazilian cheese bread, twelve units", categoryResponse, 5, userResponse, "Valencia",false);
     }
 
     @Test
