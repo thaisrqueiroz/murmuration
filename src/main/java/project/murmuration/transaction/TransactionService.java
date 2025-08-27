@@ -1,5 +1,6 @@
 package project.murmuration.transaction;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import project.murmuration.exceptions.EntityNotFoundException;
@@ -8,7 +9,6 @@ import project.murmuration.offer.Offer;
 import project.murmuration.offer.OfferRepository;
 import project.murmuration.security.CustomUserDetail;
 import project.murmuration.transaction.dto.TransactionMapper;
-import project.murmuration.transaction.dto.TransactionRequest;
 import project.murmuration.transaction.dto.TransactionResponse;
 import project.murmuration.user.User;
 import project.murmuration.user.UserRepository;
@@ -36,14 +36,11 @@ public class TransactionService {
         return TransactionMapper.entityToDto(transactions);
     }
 
-    public TransactionResponse processTransaction(TransactionRequest request, CustomUserDetail customUserDetail) {
-        Offer offer = offerRepository.findById(request.offerId()).orElseThrow(() -> new EntityNotFoundException(Offer.class.getSimpleName(), "id", request.offerId().toString()));
+    @Transactional
+    public TransactionResponse processTransaction(Long offerId, CustomUserDetail customUserDetail) {
+        Offer offer = offerRepository.findById(offerId).orElseThrow(() -> new EntityNotFoundException(Offer.class.getSimpleName(), "id", offerId.toString()));
         User userCustomer = userRepository.findById(customUserDetail.getUser().getId()).orElseThrow(() -> new EntityNotFoundException(User.class.getSimpleName(), "id", customUserDetail.getUser().getId().toString()));
         User userReceiver = offer.getUser();
-
-        if(!customUserDetail.getUser().getId().equals(userCustomer.getId())) {
-            throw new SecurityException("You don't have permission to make this transaction");
-        }
 
         if(userCustomer.getBalance() < offer.getPrice()) {
             throw new InsufficientBalanceException("You don't have enough balance to make this transaction");
