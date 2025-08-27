@@ -10,7 +10,7 @@ import project.murmuration.user.User;
 
 public class OfferMapper {
     public static Offer dtoToEntity(OfferRequest dto, Category category, User user){
-        return new Offer(dto.title(), dto.description(), category, dto.price(), dto.location(), user);
+        return new Offer(dto.title(), dto.description(), category, dto.price(), dto.location(), user, dto.isUnique());
     }
 
     public static OfferResponse entityToDto(Offer offer){
@@ -20,6 +20,6 @@ public class OfferMapper {
         CategoryResponse categoryResponse = offer.getCategory() != null
                 ? CategoryMapper.entityToDto(offer.getCategory())
                 : null;
-        return new OfferResponse(offer.getId(), offer.getTitle(), offer.getDescription(), categoryResponse, offer.getPrice(), userResponse, offer.getLocation());
+        return new OfferResponse(offer.getId(), offer.getTitle(), offer.getDescription(), categoryResponse, offer.getPrice(), userResponse, offer.getLocation(), offer.isUnique());
     }
 }

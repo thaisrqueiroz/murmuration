@@ -10,6 +10,7 @@ public record OfferResponse (
         CategoryResponse category,
         int price,
         UserResponse user,
-        String location
+        String location,
+        boolean isUnique
 ){
 }
