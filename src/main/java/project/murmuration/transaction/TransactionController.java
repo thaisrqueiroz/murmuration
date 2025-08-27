@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import project.murmuration.security.CustomUserDetail;
-import project.murmuration.transaction.dto.TransactionRequest;
 import project.murmuration.transaction.dto.TransactionResponse;
 
 import java.util.List;
@@ -30,9 +29,9 @@ public class TransactionController {
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<TransactionResponse> processTransaction(@RequestBody TransactionRequest transactionRequest, @AuthenticationPrincipal CustomUserDetail customUserDetail) {
-        TransactionResponse response = transactionService.processTransaction(transactionRequest, customUserDetail);
+    @PostMapping("/add/{offerId}")
+    public ResponseEntity<TransactionResponse> processTransaction(@PathVariable Long offerId, @AuthenticationPrincipal CustomUserDetail customUserDetail) {
+        TransactionResponse response = transactionService.processTransaction(offerId, customUserDetail);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }

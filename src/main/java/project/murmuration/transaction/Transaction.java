@@ -28,11 +28,11 @@ public class Transaction {
     @Column(name = "transaction_date", nullable = false)
     private LocalDateTime transactionDate;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn (name = "customer_user_id", nullable = false)
     private User userCustomer;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn (name = "receiver_user_id", nullable = false)
     private User userReceiver;
 
