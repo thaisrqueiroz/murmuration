@@ -9,4 +9,6 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
     List<Transaction> findByUserCustomerIdOrUserReceiverId(Long userCustomerId, Long userReceiverId);
+
+    boolean existsByOfferId(Long offerId);
 }
