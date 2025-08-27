@@ -42,6 +42,12 @@ public class TransactionService {
         User userCustomer = userRepository.findById(customUserDetail.getUser().getId()).orElseThrow(() -> new EntityNotFoundException(User.class.getSimpleName(), "id", customUserDetail.getUser().getId().toString()));
         User userReceiver = offer.getUser();
 
+        if(offer.isUnique()){
+            if(transactionRepository.existsByOfferId(offerId)){
+                throw new IllegalArgumentException("This unique offer has already been sold");
+            }
+        }
+
         if(userCustomer.getBalance() < offer.getPrice()) {
             throw new InsufficientBalanceException("You don't have enough balance to make this transaction");
         }
