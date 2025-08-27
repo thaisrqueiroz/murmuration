@@ -1,3 +1,4 @@
+DELETE FROM transactions;
 DELETE FROM offers;
 DELETE FROM users;
 DELETE FROM categories;

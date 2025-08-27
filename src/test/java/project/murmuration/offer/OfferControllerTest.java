@@ -34,15 +34,17 @@ public class OfferControllerTest {
     void shouldReturnAllOffers() throws Exception {
         mockMvc.perform(get("/api/offers").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", Matchers.hasSize(7)))
+                .andExpect(jsonPath("$", Matchers.hasSize(9)))
                 .andExpect(jsonPath("$[0].title").value("Homemade vegan cheese"))
                 .andExpect(jsonPath("$[0].description").value("Fermented almond cheese with herbs"))
                 .andExpect(jsonPath("$[0].price").value(10))
                 .andExpect(jsonPath("$[0].location").value("Valencia"))
+                .andExpect(jsonPath("$[0].isUnique").value(false))
                 .andExpect(jsonPath("$[1].title").value("Yoga class in the park"))
                 .andExpect(jsonPath("$[1].description").value("1-hour Hatha Yoga session"))
                 .andExpect(jsonPath("$[1].price").value(15))
-                .andExpect(jsonPath("$[1].location").value("Paterna"));
+                .andExpect(jsonPath("$[1].location").value("Paterna"))
+                .andExpect(jsonPath("$[0].isUnique").value(false));
     }
 
     @Test
@@ -53,7 +55,8 @@ public class OfferControllerTest {
                 .andExpect(jsonPath("$.title").value("Homemade vegan cheese"))
                 .andExpect(jsonPath("$.description").value("Fermented almond cheese with herbs"))
                 .andExpect(jsonPath("$.price").value(10))
-                .andExpect(jsonPath("$.location").value("Valencia"));
+                .andExpect(jsonPath("$.location").value("Valencia"))
+                .andExpect(jsonPath("$.isUnique").value(false));
     }
 
     @Test
@@ -64,14 +67,15 @@ public class OfferControllerTest {
                 .andExpect(jsonPath("$[0].title").value("Homemade vegan cheese"))
                 .andExpect(jsonPath("$[0].description").value("Fermented almond cheese with herbs"))
                 .andExpect(jsonPath("$[0].price").value(10))
-                .andExpect(jsonPath("$[0].location").value("Valencia"));
+                .andExpect(jsonPath("$[0].location").value("Valencia"))
+                .andExpect(jsonPath("$[0].isUnique").value(false));
     }
 
     @Test
     @DisplayName("Should create a new offer")
     @WithUserDetails("rubens_garcia")
     void addOffer() throws Exception {
-        OfferRequest newOffer = new OfferRequest("Guitar lessons", "Learn to play acoustic guitar", 4L, 10, "Paterna");
+        OfferRequest newOffer = new OfferRequest("Guitar lessons", "Learn to play acoustic guitar", 4L, 10, "Paterna", false);
 
         mockMvc.perform(post("/api/offers")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -80,14 +84,15 @@ public class OfferControllerTest {
                 .andExpect(jsonPath("$.title").value("Guitar lessons"))
                 .andExpect(jsonPath("$.description").value("Learn to play acoustic guitar"))
                 .andExpect(jsonPath("$.price").value(10))
-                .andExpect(jsonPath("$.location").value("Paterna"));
+                .andExpect(jsonPath("$.location").value("Paterna"))
+                .andExpect(jsonPath("$.isUnique").value(false));
     }
 
     @Test
     @DisplayName("Should update an existing offer")
     @WithUserDetails("rubens_garcia")
     void updateOffer() throws Exception {
-        OfferRequest updatedOffer = new OfferRequest("Homemade vegan cheese", "Fermented cashed cheese, 300 grams", 1L, 12, "Paterna");
+        OfferRequest updatedOffer = new OfferRequest("Homemade vegan cheese", "Fermented cashed cheese, 300 grams", 1L, 12, "Paterna", false);
 
         mockMvc.perform(put("/api/offers/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -96,7 +101,8 @@ public class OfferControllerTest {
                 .andExpect(jsonPath("$.title").value("Homemade vegan cheese"))
                 .andExpect(jsonPath("$.description").value("Fermented cashed cheese, 300 grams"))
                 .andExpect(jsonPath("$.price").value(12))
-                .andExpect(jsonPath("$.location").value("Paterna"));
+                .andExpect(jsonPath("$.location").value("Paterna"))
+                .andExpect(jsonPath("$.isUnique").value(false));
     }
 
     @Test
