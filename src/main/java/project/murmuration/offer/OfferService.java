@@ -30,6 +30,14 @@ public class OfferService {
         return OfferMapper.entityToDto(offer);
     }
 
+    public List<OfferResponse> getOffersByUserId(Long userId) {
+        List<Offer> offers = offerRepository.findByUserId(userId);
+        if (offers.isEmpty()) {
+            throw new EntityNotFoundException(Offer.class.getSimpleName(), "userId", userId.toString());
+        }
+        return offers.stream().map(OfferMapper::entityToDto).toList();
+    }
+
     public OfferResponse addOffer(OfferRequest offerRequest, Category category, User user) {
         Offer newOffer = OfferMapper.dtoToEntity(offerRequest, category, user);
         Offer savedOffer = offerRepository.save(newOffer);
@@ -47,6 +55,7 @@ public class OfferService {
         updatedOffer.setPrice(offerRequest.price());
         updatedOffer.setCategory(category);
         updatedOffer.setLocation(offerRequest.location());
+        updatedOffer.setUnique(offerRequest.isUnique());
         Offer savedOffer = offerRepository.save(updatedOffer);
         return OfferMapper.entityToDto(savedOffer);
     }
@@ -58,13 +67,5 @@ public class OfferService {
             throw new SecurityException("You don't have permission to delete this offer");
         }
         offerRepository.deleteById(id);
-    }
-
-    public List<OfferResponse> getOffersByUserId(Long userId) {
-        List<Offer> offers = offerRepository.findByUserId(userId);
-        if (offers.isEmpty()) {
-            throw new EntityNotFoundException(Offer.class.getSimpleName(), "userId", userId.toString());
-        }
-        return offers.stream().map(OfferMapper::entityToDto).toList();
     }
 }
