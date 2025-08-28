@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class InsufficientBalanceException extends RuntimeException {
-    public InsufficientBalanceException(String message) {
-        super(message);
+    public InsufficientBalanceException() {
+        super("You don't have enough balance to make this transaction.");
     }
 }

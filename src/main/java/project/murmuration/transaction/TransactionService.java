@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import project.murmuration.exceptions.EntityNotFoundException;
 import project.murmuration.exceptions.InsufficientBalanceException;
+import project.murmuration.exceptions.SelfTransactionNotAllowedException;
+import project.murmuration.exceptions.UniqueOfferAlreadySoldException;
 import project.murmuration.offer.Offer;
 import project.murmuration.offer.OfferRepository;
 import project.murmuration.security.CustomUserDetail;
@@ -44,16 +46,16 @@ public class TransactionService {
 
         if(offer.isUnique()){
             if(transactionRepository.existsByOfferId(offerId)){
-                throw new IllegalArgumentException("This unique offer has already been sold");
+                throw new UniqueOfferAlreadySoldException();
             }
         }
 
         if(userCustomer.getBalance() < offer.getPrice()) {
-            throw new InsufficientBalanceException("You don't have enough balance to make this transaction");
+            throw new InsufficientBalanceException();
         }
 
         if(userCustomer.getId().equals(userReceiver.getId())) {
-            throw new IllegalArgumentException("You cannot make a transaction to yourself");
+            throw new SelfTransactionNotAllowedException();
         }
 
         userCustomer.setBalance(userCustomer.getBalance() - offer.getPrice());
