@@ -59,4 +59,22 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(errorResponse, status);
     }
+
+    @ExceptionHandler(UniqueOfferAlreadySoldException.class)
+    public ResponseEntity<Object> handleUniqueOfferAlreadySoldException(UniqueOfferAlreadySoldException exception, HttpServletRequest req) {
+        HttpStatus status = HttpStatus.CONFLICT;
+        String controllerPath = String.valueOf(req.getRequestURL());
+        ErrorResponse errorResponse = new ErrorResponse(status, exception.getMessage(), controllerPath);
+
+        return new ResponseEntity<>(errorResponse, status);
+    }
+
+    @ExceptionHandler(SelfTransactionNotAllowedException.class)
+    public ResponseEntity<Object> handleSelfTransactionNotAllowedException(SelfTransactionNotAllowedException exception, HttpServletRequest req) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        String controllerPath = String.valueOf(req.getRequestURL());
+        ErrorResponse errorResponse = new ErrorResponse(status, exception.getMessage(), controllerPath);
+
+        return new ResponseEntity<>(errorResponse, status);
+    }
 }
