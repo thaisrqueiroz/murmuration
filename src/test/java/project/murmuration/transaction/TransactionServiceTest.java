@@ -9,12 +9,16 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import project.murmuration.category.Category;
 import project.murmuration.offer.Offer;
+import project.murmuration.offer.OfferRepository;
+import project.murmuration.security.CustomUserDetail;
 import project.murmuration.transaction.dto.TransactionResponse;
 import project.murmuration.user.User;
+import project.murmuration.user.UserRepository;
 import project.murmuration.user.dto.UserResponse;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.Mockito.*;
@@ -25,10 +29,20 @@ public class TransactionServiceTest {
     @Mock
     private TransactionRepository transactionRepository;
 
+    @Mock
+    private OfferRepository offerRepository;
+
+    @Mock
+    private UserRepository userRepository;
+
     @InjectMocks
     private TransactionService transactionService;
     private TransactionResponse transactionResponse;
     private Transaction transaction;
+    private User userCustomer;
+    private User userReceiver;
+    private CustomUserDetail customUserDetail;
+    private Offer offerUniqueFalse;
 
     @BeforeEach
     void setUp() {
@@ -36,21 +50,22 @@ public class TransactionServiceTest {
         categoryFood.setId(1L);
         categoryFood.setName("Food");
 
-        User userCustomer = new User();
+        userCustomer = new User();
         userCustomer.setId(1L);
         userCustomer.setUsername("thais");
         userCustomer.setName("Thais");
         userCustomer.setEmail("thais@email.com");
+        userCustomer.setBalance(100);
         userCustomer.setRole(USER);
 
-        User userReceiver = new User();
+        userReceiver = new User();
         userReceiver.setId(2L);
         userReceiver.setUsername("rubens");
         userReceiver.setName("Rubens");
         userReceiver.setEmail("rubens@email.com");
         userReceiver.setRole(USER);
 
-        Offer offerUniqueFalse = new Offer();
+        offerUniqueFalse = new Offer();
         offerUniqueFalse.setId(1L);
         offerUniqueFalse.setTitle("Pao de queijo");
         offerUniqueFalse.setDescription("Delicious Brazilian cheese bread, twelve units");
@@ -59,6 +74,8 @@ public class TransactionServiceTest {
         offerUniqueFalse.setCategory(categoryFood);
         offerUniqueFalse.setUser(userReceiver);
         offerUniqueFalse.setUnique(false);
+
+        customUserDetail = new CustomUserDetail(userCustomer);
 
         transaction = new Transaction();
         transaction.setId(1L);
@@ -97,12 +114,29 @@ public class TransactionServiceTest {
     @Test
     @DisplayName("Should return transactions by user id")
     void getTransactionsByUserId_whenTransactionExists_returnsTransactionResponse() {
-        when(transactionRepository.findByUserCustomerIdOrUserReceiverId(1L,1L)).thenReturn(List.of(transaction));
+        when(transactionRepository.findByUserCustomerIdOrUserReceiverId(1L, 1L)).thenReturn(List.of(transaction));
 
         List<TransactionResponse> result = transactionService.getTransactionsByUserId(1L);
 
         assertThat(result).hasSize(1);
         assertThat(result.get(0).userCustomer().id()).isEqualTo(1L);
         verify(transactionRepository, times(1)).findByUserCustomerIdOrUserReceiverId(1L, 1L);
+    }
+
+    @Test
+    @DisplayName("Should process a transaction successfully")
+    void processTransaction_whenValidOfferAndUser_thenReturnTransactionResponse() {
+        when(offerRepository.findById(1L)).thenReturn(Optional.of(offerUniqueFalse));
+        when(userRepository.findById(1L)).thenReturn((Optional.of(userCustomer)));
+        when(transactionRepository.save(any(Transaction.class))).thenReturn(transaction);
+
+        TransactionResponse result = transactionService.processTransaction(1L, customUserDetail);
+
+        assertThat(result.offerId()).isEqualTo(1L);
+        assertThat(result.userCustomer().id()).isEqualTo(1L);
+        assertThat(result.userReceiver().id()).isEqualTo(2L);
+
+        verify(userRepository, times(2)).save(any(User.class));
+        verify(transactionRepository, times(1)).save(any(Transaction.class));
     }
 }
