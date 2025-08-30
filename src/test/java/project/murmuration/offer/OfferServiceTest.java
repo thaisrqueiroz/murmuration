@@ -64,7 +64,7 @@ public class OfferServiceTest {
 
     @Test
     @DisplayName("Should return all offers")
-    void getAllOffers() {
+    void getAllOffers_whenOffersExist_returnsListOfOffersResponse() {
         when(offerRepository.findAll()).thenReturn(List.of(offer));
 
         List<OfferResponse> result = offerService.getAllOffers();
@@ -74,8 +74,8 @@ public class OfferServiceTest {
     }
 
     @Test
-    @DisplayName("Should return offer by id")
-    void getOfferResponseById() {
+    @DisplayName("Should return offer by offer id")
+    void getOfferResponseById_whenOfferExists_returnsOfferResponse() {
         when(offerRepository.findById(1L)).thenReturn(Optional.of(offer));
 
         OfferResponse result = offerService.getOfferResponseById(1L);
@@ -86,7 +86,7 @@ public class OfferServiceTest {
 
     @Test
     @DisplayName("Should return offer by user id")
-    void getOffersByUserId() {
+    void getOffersByUserId_whenUserHasOffers_returnsListOfOffer() {
         when(offerRepository.findByUserId(1L)).thenReturn(List.of(offer));
 
         List<OfferResponse> result = offerService.getOffersByUserId(1L);
@@ -97,7 +97,7 @@ public class OfferServiceTest {
 
     @Test
     @DisplayName("Should add a new offer")
-    void addOffer() {
+    void addOffer_whenUserIsAuthenticated_returnsOfferResponse() {
         Category category = offer.getCategory();
         User user = offer.getUser();
 
@@ -111,7 +111,7 @@ public class OfferServiceTest {
 
     @Test
     @DisplayName("Should update an offer")
-    void updateOffer() {
+    void updateOffer_whenOfferExists_returnsOfferResponse() {
         Category category = offer.getCategory();
         User user = offer.getUser();
 
@@ -127,7 +127,7 @@ public class OfferServiceTest {
 
     @Test
     @DisplayName("Should not update an offer if user is not the owner")
-    void updateOffer_whenUserIsNotOwner() {
+    void updateOffer_whenUserIsNotOwner_returnsForbidden() {
         User anotherUser = new User();
         anotherUser.setId(2L);
         anotherUser.setUsername("rubens");
@@ -147,7 +147,7 @@ public class OfferServiceTest {
 
     @Test
     @DisplayName("Should delete an offer")
-    void deleteOffer() {
+    void deleteOffer_whenOfferExists_returnsVoid() {
         when(offerRepository.findById(1L)).thenReturn(Optional.of(offer));
 
         offerService.deleteOffer(1L, offer.getUser());
@@ -158,7 +158,7 @@ public class OfferServiceTest {
 
     @Test
     @DisplayName("Should not delete an offer if user is not the owner")
-    void deleteOffer_whenUserIsNotOwner() {
+    void deleteOffer_whenUserIsNotOwner_returnsForbidden() {
         User anotherUser = new User();
         anotherUser.setId(2L);
         anotherUser.setUsername("rubens");
