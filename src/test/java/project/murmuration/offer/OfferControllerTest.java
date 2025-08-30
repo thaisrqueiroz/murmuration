@@ -49,7 +49,7 @@ public class OfferControllerTest {
 
     @Test
     @DisplayName("Should return offer by ID")
-    void getOfferById() throws Exception {
+    void getOfferById_whenOfferExists_returnsOfferResponse() throws Exception {
         mockMvc.perform(get("/api/offers/{id}", 1).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value("Homemade vegan cheese"))
@@ -61,7 +61,7 @@ public class OfferControllerTest {
 
     @Test
     @DisplayName("Should return offer by user id")
-    void getOfferByUserId() throws Exception {
+    void getOfferByUserId_whenUserHasOffers_returnsListOfOffer() throws Exception {
         mockMvc.perform(get("/api/offers/user/{userId}", 2).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value("Homemade vegan cheese"))
@@ -74,7 +74,7 @@ public class OfferControllerTest {
     @Test
     @DisplayName("Should create a new offer")
     @WithUserDetails("rubens_garcia")
-    void addOffer() throws Exception {
+    void addOffer_whenUserIsAuthenticated_returnsOfferResponse() throws Exception {
         OfferRequest newOffer = new OfferRequest("Guitar lessons", "Learn to play acoustic guitar", 4L, 10, "Paterna", false);
 
         mockMvc.perform(post("/api/offers")
@@ -91,7 +91,7 @@ public class OfferControllerTest {
     @Test
     @DisplayName("Should update an existing offer")
     @WithUserDetails("rubens_garcia")
-    void updateOffer() throws Exception {
+    void updateOffer_whenOfferExists_returnsOfferResponse() throws Exception {
         OfferRequest updatedOffer = new OfferRequest("Homemade vegan cheese", "Fermented cashed cheese, 300 grams", 1L, 12, "Paterna", false);
 
         mockMvc.perform(put("/api/offers/{id}", 1)
@@ -108,7 +108,7 @@ public class OfferControllerTest {
     @Test
     @DisplayName("Should delete an offer")
     @WithUserDetails("rubens_garcia")
-    void deleteOffer() throws Exception {
+    void deleteOffer_whenOfferExists_returnsVoid() throws Exception {
         mockMvc.perform(delete("/api/offers/{id}", 1))
                 .andExpect(status().isNoContent());
         mockMvc.perform(delete("/api/offers/{id}", 1))
