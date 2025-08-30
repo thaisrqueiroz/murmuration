@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import project.murmuration.category.Category;
+import project.murmuration.exceptions.EntityNotFoundException;
 import project.murmuration.offer.Offer;
 import project.murmuration.offer.OfferRepository;
 import project.murmuration.security.CustomUserDetail;
@@ -21,6 +22,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import static project.murmuration.security.Role.USER;
 
@@ -121,6 +124,18 @@ public class TransactionServiceTest {
         assertThat(result).hasSize(1);
         assertThat(result.get(0).userCustomer().id()).isEqualTo(1L);
         verify(transactionRepository, times(1)).findByUserCustomerIdOrUserReceiverId(1L, 1L);
+    }
+
+    @Test
+    @DisplayName("Should throw exception when no transactions found for user id")
+    void getTransactionsByUserId_whenNoTransactionExists_throwsException() {
+        when(transactionRepository.findByUserCustomerIdOrUserReceiverId(3L, 3L)).thenReturn(List.of());
+
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () ->
+            transactionService.getTransactionsByUserId(3L));
+
+        assertEquals("Transaction with userId 3 was not found", exception.getMessage());
+        verify(transactionRepository, times(1)).findByUserCustomerIdOrUserReceiverId(3L, 3L);
     }
 
     @Test
