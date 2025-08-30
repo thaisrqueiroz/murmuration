@@ -33,7 +33,7 @@ public class UserControllerTest {
     @Test
     @DisplayName("Should return all users")
     @WithMockUser(username = "admin", roles = "ADMIN")
-    void getAllUsers() throws Exception {
+    void getAllUsers_whenUsersExist_returnListOfUsers() throws Exception {
         mockMvc.perform(get("/api/users").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(9)))
@@ -50,7 +50,7 @@ public class UserControllerTest {
     @Test
     @DisplayName("Should return user by ID when user is ADMIN")
     @WithUserDetails("admin")
-    void getUserByIdAsAdmin() throws Exception {
+    void getUserByIdAsAdmin_whenUserIsAnAdmin_returnsUserResponse () throws Exception {
 
         mockMvc.perform(get("/api/users/{id}", 2).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -62,7 +62,7 @@ public class UserControllerTest {
     @Test
     @DisplayName("Should return user by ID when user requests their own data")
     @WithUserDetails("rubens_garcia")
-    void getUserByIdAsUser() throws Exception {
+    void getUserByIdAsUser_whenUserIsAuthenticated_returnsUserResponse () throws Exception {
         mockMvc.perform(get("/api/users/{id}", 2).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value("rubens_garcia"))
@@ -72,7 +72,7 @@ public class UserControllerTest {
     @Test
     @DisplayName("Should return FORBIDDEN when user tries to access another user's data")
     @WithUserDetails("rubens_garcia")
-    void getUserByIdForbidden() throws Exception {
+    void getUserByIdForbidden_whenUserTriesToAccessAnotherUsersData_ReturnsForbidden () throws Exception {
         mockMvc.perform(get("/api/users/{id}", 3).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
     }
@@ -80,7 +80,7 @@ public class UserControllerTest {
     @Test
     @DisplayName("Should update user's data")
     @WithUserDetails("rubens_garcia")
-    void updateUser() throws Exception {
+    void updateUser_whenValidRequest_returnsUpdatedUser () throws Exception {
         UserRequest updateRequest = new UserRequest("rubens_newUser", "Rubens Updated", "new@email.com", "newPassword#123", "Barcelona", "USER");
 
         String json = objectMapper.writeValueAsString(updateRequest);
@@ -97,10 +97,10 @@ public class UserControllerTest {
     @Test
     @DisplayName("Should delete user by ID when user is ADMIN")
     @WithUserDetails("admin")
-    void deleteUserAsAdmin() throws Exception {
-        mockMvc.perform(delete("/api/users/{id}", 2))
+    void deleteUserAsAdmin_whenValidId_returnsNoContent() throws Exception {
+        mockMvc.perform(delete("/api/users/{id}", 9))
                 .andExpect(status().isNoContent());
-        mockMvc.perform(get("/api/users/{id}", 2))
+        mockMvc.perform(get("/api/users/{id}", 9))
                 .andExpect(status().isNotFound());
     }
 }

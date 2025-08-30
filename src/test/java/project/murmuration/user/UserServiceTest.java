@@ -52,7 +52,7 @@ public class UserServiceTest {
 
     @Test
     @DisplayName("Should login existing user")
-    void loadUserByUsername() {
+    void login_whenFindByUsername_returnsLoad () {
         when(userRepository.findByUsername("thais")).thenReturn(Optional.of(user));
 
         UserDetails result = userService.loadUserByUsername("thais");
@@ -66,7 +66,7 @@ public class UserServiceTest {
 
     @Test
     @DisplayName("Should return all users")
-    void getAllUsers() {
+    void getAllUsers_whenExistsUsers_returnListOfUser() {
         when(userRepository.findAll()).thenReturn(List.of(user));
 
         List<UserResponse> result = userService.getAllUsers();
@@ -77,7 +77,7 @@ public class UserServiceTest {
 
     @Test
     @DisplayName("Should return user by ID")
-    void getUserResponseById() {
+    void getUserResponseById_whenUserExist_returnsUserResponse() {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
         UserResponse result = userService.getUserResponseById(1L);
@@ -88,7 +88,7 @@ public class UserServiceTest {
 
     @Test
     @DisplayName("Should encrypts the password, verifies that the username does not already exist, save the new user and returns a response object")
-    void addUser() {
+    void addUser_whenUserIsValid_returnsUserRequest() {
         when(passwordEncoder.encode(userRequest.password())).thenReturn("encodedPassword");
         when(userRepository.existsByUsername(userRequest.username())).thenReturn(false);
         when(userRepository.save(any(User.class))).thenReturn(user);
@@ -103,7 +103,7 @@ public class UserServiceTest {
 
     @Test
     @DisplayName("Should throw an exception when trying to add a user with an existing username")
-    void addUserWhenUsernameAlreadyExists() {
+    void addUser_whenUsernameAlreadyExists_returnsEntityAlreadyExistsException() {
         when(userRepository.existsByUsername(userRequest.username())).thenReturn(true);
 
         EntityAlreadyExistsException exception = assertThrows(EntityAlreadyExistsException.class, () -> userService.addUser(userRequest));
@@ -113,7 +113,7 @@ public class UserServiceTest {
 
     @Test
     @DisplayName("Should update user")
-    void updateUser() {
+    void updateUser_whenUserExists_returnsUserResponse() {
         UserRequest updateRequest = new UserRequest("new_thais", "Thais Updated", "new@email.com", "NewP@ssw0rd", "Madrid", "ROLE_USER");
 
         UserResponse expectedResponse = new UserResponse(1L, "new_thais", "Thais Updated", "new@email.com", USER);
@@ -133,7 +133,7 @@ public class UserServiceTest {
 
     @Test
     @DisplayName("Should delete user by ID")
-    void deleteUser() {
+    void deleteUser_whenUserExists_returnsVoid() {
         when(userRepository.existsById(1L)).thenReturn(true);
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
