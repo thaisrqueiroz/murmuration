@@ -14,15 +14,15 @@ INSERT INTO categories (id, name) VALUES (5, 'Exchange');
 INSERT INTO categories (id, name) VALUES (6, 'Handmade Products');
 INSERT INTO categories (id, name) VALUES (7, 'Electronics');
 
-INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('admin', 'Admin User', 'admin@email.com', '$2a$12$fu5U8ffoS7fBBs/uJ88qRebYqduvYKEgsElAkVCHpUmPRD3ZHsoyq', 'ADMIN', 'Valencia', 100);
-INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('rubens_garcia', 'Rubens Garcia', 'elrubens@email.com', '$2a$12$qAPOHQ9Phe039yKYGFWIUevX6k9N/JEe9uJmujJGfZDYpYmHxGZKu', 'USER', 'Xirivella', 77);
-INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('selma_gonzalez', 'Selma Gonzalez', 'selma@email.com', '$2a$12$a65DjbrxIJPZtxYRCmk6OuBh88Rm5ntX6m2dW3yCdiy/O7JRTiuMK', 'USER', 'Valencia', 80);
-INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('anna_magaro', 'Anna Carolina Magaro', 'annacarolina@email.com', '$2a$12$aaooSvmGbWIHYgcpuybdI.D6xuQuTF5CHirQdkcbNPRFlK9SzYgHS', 'USER', 'Valencia', 30);
-INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('lorena_pumarino', 'Lorena Pumariño', 'lorena@email.com', '$2a$12$6ElMOBQHtqJAXADugqvwT.6c5H0ZixxXjFL3B8lf2Xf2sysBX0bG.', 'USER', 'Paterna', 75);
-INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('carlos_valls', 'Carlos Valls', 'carlos@email.com', '$2a$12$4NHOia2IQp6WwHqGbPljieeySywW9bgi3adNBIg1QErlesqaCpR0S', 'USER', 'Patacona', 67);
-INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('belen_valiente', 'Belén Valiente', 'belen@email.com', '$2a$12$bFRWpULA01OZac6rNmD5FOxf9zi9LzGbDzXouwJWBQE.w5EqQk1z.', 'USER', 'Alboraya', 48);
-INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('stefano_ventrudo', 'Stefano Ventrudo', 'stefano@email.com', '$2a$12$hHVZLB4r.h/mq3MW0tSJuecCs3pFHwxUQ4gmNvAIoTdX6i94C6hw.', 'USER', 'Torrent', 23);
-INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('delia_molina', 'Delia Molina Cordero', 'delia@email.com', '$2a$12$N6x6XifNYNPmJ8hnsO3iQui4Me0EGDQRgHZUH5AuFN3prH8LLJaAa', 'USER', 'Aldaya', 51);
+INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('admin', 'Admin User', 'admin@email.com', '$2a$12$rRwUjOC9ZpCfubz9fU5GROn4Bw0yUsvyDCxEVijf.529S6l6DZwWO', 'ADMIN', 'Valencia', 100);
+INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('rubens_garcia', 'Rubens Garcia', '$2a$12$rRwUjOC9ZpCfubz9fU5GROn4Bw0yUsvyDCxEVijf.529S6l6DZwWO', 'Str0ngP@ssw0rd', 'USER', 'Xirivella', 77);
+INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('selma_gonzalez', 'Selma Gonzalez', 'selma@email.com', '$2a$12$rRwUjOC9ZpCfubz9fU5GROn4Bw0yUsvyDCxEVijf.529S6l6DZwWO', 'USER', 'Valencia', 80);
+INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('anna_magaro', 'Anna Carolina Magaro', 'annacarolina@email.com', '$2a$12$rRwUjOC9ZpCfubz9fU5GROn4Bw0yUsvyDCxEVijf.529S6l6DZwWO', 'USER', 'Valencia', 30);
+INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('lorena_pumarino', 'Lorena Pumariño', 'lorena@email.com', '$2a$12$rRwUjOC9ZpCfubz9fU5GROn4Bw0yUsvyDCxEVijf.529S6l6DZwWO', 'USER', 'Paterna', 75);
+INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('carlos_valls', 'Carlos Valls', 'carlos@email.com', '$2a$12$rRwUjOC9ZpCfubz9fU5GROn4Bw0yUsvyDCxEVijf.529S6l6DZwWO', 'USER', 'Patacona', 67);
+INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('belen_valiente', 'Belén Valiente', 'belen@email.com', '$2a$12$rRwUjOC9ZpCfubz9fU5GROn4Bw0yUsvyDCxEVijf.529S6l6DZwWO', 'USER', 'Alboraya', 48);
+INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('stefano_ventrudo', 'Stefano Ventrudo', 'stefano@email.com', '$2a$12$rRwUjOC9ZpCfubz9fU5GROn4Bw0yUsvyDCxEVijf.529S6l6DZwWO', 'USER', 'Torrent', 23);
+INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('delia_molina', 'Delia Molina Cordero', 'delia@email.com', '$2a$12$rRwUjOC9ZpCfubz9fU5GROn4Bw0yUsvyDCxEVijf.529S6l6DZwWO', 'USER', 'Aldaya', 51);
 
 INSERT INTO offers (title, description, category_id, price, owner_id, location, is_unique) VALUES ('Homemade vegan cheese', 'Fermented almond cheese with herbs', 1, 10, 2, 'Valencia', false);
 INSERT INTO offers (title, description, category_id, price, owner_id, location, is_unique) VALUES ('Yoga class in the park', '1-hour Hatha Yoga session', 4, 15, 4, 'Paterna', false);
