@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import project.murmuration.category.dto.CategoryMapper;
 import project.murmuration.category.dto.CategoryRequest;
 import project.murmuration.category.dto.CategoryResponse;
+import project.murmuration.exceptions.EntityAlreadyExistsException;
 import project.murmuration.exceptions.EntityNotFoundException;
 
 import java.util.List;
@@ -30,6 +31,11 @@ public class CategoryService {
     }
 
     public CategoryResponse addCategory(CategoryRequest categoryRequest){
+
+        if(categoryRepository.existsByName(categoryRequest.name())){
+            throw new EntityAlreadyExistsException(Category.class.getSimpleName(), "name", categoryRequest.name());
+        }
+
         Category category = CategoryMapper.dtoToEntity(categoryRequest);
         Category savedCategory = categoryRepository.save(category);
         return CategoryMapper.entityToDto(savedCategory);
