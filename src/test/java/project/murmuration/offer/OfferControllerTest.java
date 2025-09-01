@@ -107,11 +107,11 @@ public class OfferControllerTest {
 
     @Test
     @DisplayName("Should delete an offer")
-    @WithUserDetails("rubens_garcia")
+    @WithUserDetails("anna_magaro")
     void deleteOffer_whenOfferExists_returnsVoid() throws Exception {
-        mockMvc.perform(delete("/api/offers/{id}", 1))
+        mockMvc.perform(delete("/api/offers/{id}", 2))
                 .andExpect(status().isNoContent());
-        mockMvc.perform(delete("/api/offers/{id}", 1))
+        mockMvc.perform(delete("/api/offers/{id}", 2))
                 .andExpect(status().isNotFound());
     }
 }
