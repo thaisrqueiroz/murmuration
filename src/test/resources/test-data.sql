@@ -12,6 +12,7 @@ INSERT INTO categories (id, name) VALUES (3, 'Pet Care');
 INSERT INTO categories (id, name) VALUES (4, 'Classes');
 INSERT INTO categories (id, name) VALUES (5, 'Exchange');
 INSERT INTO categories (id, name) VALUES (6, 'Handmade Products');
+INSERT INTO categories (id, name) VALUES (7, 'Electronics');
 
 INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('admin', 'Admin User', 'admin@email.com', '$2a$12$fu5U8ffoS7fBBs/uJ88qRebYqduvYKEgsElAkVCHpUmPRD3ZHsoyq', 'ADMIN', 'Valencia', 100);
 INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('rubens_garcia', 'Rubens Garcia', 'elrubens@email.com', '$2a$12$qAPOHQ9Phe039yKYGFWIUevX6k9N/JEe9uJmujJGfZDYpYmHxGZKu', 'USER', 'Xirivella', 77);
