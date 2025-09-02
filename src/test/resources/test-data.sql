@@ -15,7 +15,7 @@ INSERT INTO categories (id, name) VALUES (6, 'Handmade Products');
 INSERT INTO categories (id, name) VALUES (7, 'Electronics');
 
 INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('admin', 'Admin User', 'admin@email.com', '$2a$12$rRwUjOC9ZpCfubz9fU5GROn4Bw0yUsvyDCxEVijf.529S6l6DZwWO', 'ADMIN', 'Valencia', 100);
-INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('rubens_garcia', 'Rubens Garcia', '$2a$12$rRwUjOC9ZpCfubz9fU5GROn4Bw0yUsvyDCxEVijf.529S6l6DZwWO', 'Str0ngP@ssw0rd', 'USER', 'Xirivella', 77);
+INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('rubens_garcia', 'Rubens Garcia', 'elrubens@email.com', '$2a$12$rRwUjOC9ZpCfubz9fU5GROn4Bw0yUsvyDCxEVijf.529S6l6DZwWO', 'USER', 'Xirivella', 77);
 INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('selma_gonzalez', 'Selma Gonzalez', 'selma@email.com', '$2a$12$rRwUjOC9ZpCfubz9fU5GROn4Bw0yUsvyDCxEVijf.529S6l6DZwWO', 'USER', 'Valencia', 80);
 INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('anna_magaro', 'Anna Carolina Magaro', 'annacarolina@email.com', '$2a$12$rRwUjOC9ZpCfubz9fU5GROn4Bw0yUsvyDCxEVijf.529S6l6DZwWO', 'USER', 'Valencia', 30);
 INSERT INTO users (username, name, email, password, role, location, balance) VALUES ('lorena_pumarino', 'Lorena Pumariño', 'lorena@email.com', '$2a$12$rRwUjOC9ZpCfubz9fU5GROn4Bw0yUsvyDCxEVijf.529S6l6DZwWO', 'USER', 'Paterna', 75);
