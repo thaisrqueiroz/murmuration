@@ -1,7 +1,6 @@
 package project.murmuration.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.annotation.Resource;
 import jakarta.persistence.*;
 import lombok.*;
 import project.murmuration.offer.Offer;
