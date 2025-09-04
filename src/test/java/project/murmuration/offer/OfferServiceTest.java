@@ -96,6 +96,19 @@ public class OfferServiceTest {
     }
 
     @Test
+    @DisplayName("Should return not found when user has no offers")
+    void getOffersByUserId_whenUserHasNoOffers_throwsEntityNotFoundException() {
+        when(offerRepository.findByUserId(9L)).thenReturn(List.of());
+
+        try {
+            offerService.getOffersByUserId(9L);
+        } catch (RuntimeException exception) {
+            assertThat(exception.getMessage()).isEqualTo("Offer with userId 9 was not found");
+        }
+        verify(offerRepository, times(1)).findByUserId(9L);
+    }
+
+    @Test
     @DisplayName("Should add a new offer")
     void addOffer_whenUserIsAuthenticated_returnsOfferResponse() {
         Category category = offer.getCategory();
