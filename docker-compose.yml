@@ -1,0 +1,80 @@
+services:
+  murmuration-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: murmuration-springboot
+
+    ports:
+      - "8081:8080"
+
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SERVER_PORT=8080
+      - DB_URL=jdbc:mysql://murmuration-db:3306/murmuration
+      - DB_USERNAME=murmuration
+      - DB_PASSWORD=murmuration123
+      - jwt.secret.key=${JWT_SECRET_KEY}
+      - JWT_EXPIRATION_TIME=1800000
+
+    restart: unless-stopped
+
+    depends_on:
+      murmuration-db:
+        condition: service_healthy
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+    networks:
+      - murmuration-network
+
+  murmuration-db:
+    image: mysql:8.0
+
+    container_name: murmuration-db
+
+    environment:
+      MYSQL_DATABASE: murmuration
+      MYSQL_USER: murmuration
+      MYSQL_PASSWORD: murmuration123
+      MYSQL_ROOT_PASSWORD: root123
+
+    ports:
+      - "3307:3306"
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+    restart: unless-stopped
+
+    healthcheck:
+      test: [
+        "CMD",
+        "mysqladmin",
+        "ping",
+        "-h",
+        "localhost",
+        "-u",
+        "murmuration",
+        "-pmurmuration123",
+      ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+    networks:
+      - murmuration-network
+
+networks:
+  murmuration-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
