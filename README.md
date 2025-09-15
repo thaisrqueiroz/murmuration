@@ -140,8 +140,6 @@ Once the application is running, the API will be available at:
 
 ---
 
----
-
 ## 🔄 CI/CD with GitHub Actions & Docker
 
 This project implements a robust CI/CD pipeline using GitHub Actions to automate testing, Docker image building, and release management.
@@ -204,3 +202,4 @@ Activities:
 - Add status (available/unavailable)
 - Add subcategories
 - Email notifications for key actions.
+
