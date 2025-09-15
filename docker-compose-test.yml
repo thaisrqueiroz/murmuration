@@ -4,7 +4,7 @@
 
 services:
   # Test service using official Maven image
-  murmuration-test:
+  test:
     # Use official Maven image with Eclipse Temurin JDK 21
     image: maven:3.9.11-eclipse-temurin-21
 
@@ -29,7 +29,7 @@ services:
     environment:
       - SHOW_SQL=false
       - SERVER_PORT=8080 # Sets the server port inside container
-      - DB_URL=jdbc:mysql://test-db:3306/murmuration # Database connection URL using service name
+      - DB_URL=jdbc:mysql://test-db:3306/test # Database connection URL using service name
       - DB_USERNAME=usertest # Database username
       - DB_PASSWORD=app123 # Database password
 
