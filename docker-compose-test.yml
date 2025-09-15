@@ -4,7 +4,7 @@
 
 services:
   # Test service using official Maven image
-  test:
+  murmuration-test:
     # Use official Maven image with Eclipse Temurin JDK 21
     image: maven:3.9.11-eclipse-temurin-21
 
